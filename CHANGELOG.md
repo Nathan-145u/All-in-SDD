@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.4.0] - 2026-04-13
+
+### Added
+- **Full test suite in `/sdd-do`**: After a ticket's own tests pass, run the full project test suite (unit + integration) to catch regressions before proceeding
+- **Checklist writing standard** in CLAUDE.md: All verifiable items must use `- [ ]` checklist format, not plain bullets
+
 ## [0.3.0] - 2026-04-13
 
 ### Added

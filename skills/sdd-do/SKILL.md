@@ -40,6 +40,7 @@ Execute a ticket and update its status.
 
 6. **Execute implementation.**
    - Use TDD: write failing tests from acceptance criteria, then implement until tests pass.
+   - After the ticket's own tests pass, run the full project test suite (unit + integration) to catch regressions. If any existing test fails, fix before proceeding.
    - Primarily modify files declared in the ticket. If changes to undeclared files are needed → pause, report to the user, request confirmation, then update the ticket's file list.
 
 7. **Exception handling.**

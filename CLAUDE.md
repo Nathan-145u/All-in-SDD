@@ -79,3 +79,7 @@ All-in-SDD/
 - Every change set gets its own version bump — no batching multiple sessions into one version.
 - CHANGELOG.md is mandatory for every version.
 - README.md updates are mandatory when user-facing behavior changes.
+
+## Writing Standards
+
+- **Checklists over bullets.** Any item that can be verified (done/not done, pass/fail) must be written as a checklist (`- [ ]`), not a plain bullet (`-`). This applies to acceptance criteria, done definitions, verification steps, sync checks, and any other list where items are meant to be confirmed.
