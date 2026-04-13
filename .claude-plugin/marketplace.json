@@ -1,0 +1,19 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "claude-sdd",
+  "description": "Spec-Driven Development workflow for Claude Code",
+  "owner": {
+    "name": "Nathan Zhao"
+  },
+  "plugins": [
+    {
+      "name": "sdd",
+      "source": "./",
+      "description": "Spec-Driven Development — a complete workflow with spec writing, planning, task breakdown, implementation, and verification",
+      "version": "0.1.0",
+      "license": "MIT",
+      "keywords": ["sdd", "spec-driven", "workflow", "tdd"],
+      "category": "workflow"
+    }
+  ]
+}

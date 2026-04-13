@@ -1,0 +1,58 @@
+---
+name: sdd-do
+description: Execute the next (or a specified) ticket
+user_invocable: true
+arg_description: "[feature-path | ticket-number] — e.g., specs/v0.4/001-ai-qa or T005. Omit to auto-select the next executable ticket"
+---
+
+# /sdd-do
+
+Execute a ticket and update its status.
+
+## Parameters
+
+- `feature-path` (optional): e.g., `specs/v0.4/001-ai-qa`. When specified, only select tickets within that feature.
+- `ticket-number` (optional): e.g., `T005`. Directly specify the ticket to execute.
+- Omit all parameters: scan all tasks.md files, auto-select the first ticket in `planned` status whose dependencies are all `done`.
+
+**Priority:** specified ticket number > specified feature path > auto-select.
+
+## Steps
+
+1. **Locate the ticket.**
+   - If a number was specified: search all tasks.md files under `specs/` for that ticket.
+   - If a feature path was specified: find the first `planned` ticket with all dependencies `done` in that feature's tasks.md.
+   - If nothing was specified: scan all tasks.md files, find the first `planned` ticket with all dependencies `done`.
+   - If no executable ticket is found → inform the user that all tickets are complete or blocked.
+
+2. **Load context.** Read spec.md and plan.md from the ticket's feature directory.
+
+3. **Check isolation.** If not currently on the feature's branch, create or switch to `feat/<version>/<feature-name>` (e.g., `feat/v0.4/001-ai-qa`).
+
+4. **Check `[HUMAN REQUIRED]`.** If the ticket's "Manual Intervention" field contains `[HUMAN REQUIRED]`:
+   - Change ticket status to `in_progress`
+   - **Immediately notify the user**: list the specific steps the user must complete
+   - Wait for user to confirm completion
+   - Change status to `for_review`
+   - Skip to step 8
+
+5. **Change ticket status to `in_progress`.** Write to tasks.md.
+
+6. **Execute implementation.**
+   - Use TDD: write failing tests from acceptance criteria, then implement until tests pass.
+   - Primarily modify files declared in the ticket. If changes to undeclared files are needed → pause, report to the user, request confirmation, then update the ticket's file list.
+
+7. **Exception handling.**
+   - If implementation reveals a situation the spec didn't anticipate → **pause**, revert ticket status to `planned`, report the issue to the user, suggest running `/sdd-propose` to revise the spec.
+   - If spec-code drift is detected (implementation deviates from spec definition) → **immediately warn**, handle as an SDD violation.
+
+8. **Complete.** Change ticket status to `for_review`, present to the user:
+   - Change summary (which files were modified, key changes)
+   - Whether the ticket's done definition is satisfied
+   - Wait for user confirmation
+
+9. **After user confirms**, change status to `done`.
+
+10. **Prompt next step:**
+    - If more tickets remain → prompt `/sdd-do` to continue
+    - If all tickets for this feature are done → prompt `/sdd-verify-feature <feature-path>` for verification
