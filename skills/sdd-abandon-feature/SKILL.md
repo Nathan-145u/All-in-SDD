@@ -33,7 +33,9 @@ Abandon a feature. Preserve all files as historical record but mark as no longer
    - Mark the feature as `[ABANDONED]` in VERSION_PLAN.md
    - If a feature branch `feat/<version>/<feature-name>` exists, ask the user if they want to delete it
 
-5. Ask the user if they want to record the abandonment reason. If yes, create or append to `research.md` in the feature directory:
+5. Ask the user if they want to add the core idea back to `docs/BACKLOG.md`. If yes, follow the `/sdd-backlog add` workflow to determine category and priority.
+
+6. Ask the user if they want to record the abandonment reason. If yes, create or append to `research.md` in the feature directory:
 
 ```markdown
 ## Abandonment Record
@@ -41,4 +43,4 @@ Abandon a feature. Preserve all files as historical record but mark as no longer
 - Reason: [user-provided reason]
 ```
 
-6. After completion, prompt `/sdd-status` to view the updated project status.
+7. After completion, prompt `/sdd-status` to view the updated project status.

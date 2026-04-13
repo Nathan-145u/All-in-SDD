@@ -110,7 +110,7 @@ Generate `plan.md`: the technical implementation approach for the feature.
 
 Generate `tasks.md`: break the plan into atomic work packages.
 
-**Ticket numbering rule:** Globally incrementing, not reset per feature. Before creating a new tasks.md, scan all existing tasks.md files under `specs/` to find the maximum ticket number, then start from the next number.
+**Ticket numbering rule:** Globally incrementing, not reset per feature. Before creating a new tasks.md, read `docs/COUNTERS.md` to get the current T-number, then start from the next number. After creating all tickets, update COUNTERS.md with the new maximum.
 
 **tasks.md template:**
 
@@ -200,3 +200,32 @@ Not every feature needs all files:
 | Enhancement to existing module | spec + plan + tasks |
 | Clear bug fix | spec + tasks (tasks derived directly from spec, skip plan) |
 | Single-file small change | spec only |
+
+## 2.9 Backlog
+
+`docs/BACKLOG.md` is the upstream collection point for the SDD pipeline — items that haven't entered the formal spec process.
+
+### Categories
+
+| Category | Definition | Who Perceives the Problem | Example |
+|----------|-----------|--------------------------|---------|
+| Ideas | New functionality that may or may not be built | — | "A-B loop auto-suggest difficult sentences" |
+| Bug | Something is broken or not working as designed; not urgent enough to fix immediately | User | "Offline mode shows stale episode count" |
+| Polish | Small UX improvements; not doing them doesn't break core functionality | User | "Progress bar contrast too low in dark mode" |
+| Tech Debt | Code/architecture issues; currently working but should be improved | Developer only | "Two services have duplicated retry logic" |
+
+### Priority
+
+Every item must have a priority tag:
+
+| Priority | Tag | When to Pick Up |
+|----------|-----|----------------|
+| High | 🔴 high | Next gap between features |
+| Mid | 🟡 mid | When there's time after a version |
+| Low | 🟢 low | Someday, no active plan |
+
+### Relationship to Pipeline
+
+- Backlog items are NOT subject to the "spec before code" rule.
+- An item enters the formal pipeline only when promoted (via `/sdd-backlog promote`).
+- Promotion triggers `/sdd-propose` to create the feature spec.

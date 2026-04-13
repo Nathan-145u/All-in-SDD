@@ -19,9 +19,10 @@ Create a new version directory and register it in VERSION_PLAN.md.
 
 2. Create `specs/<version>/` directory.
 
-3. Ask the user:
+3. Read `docs/BACKLOG.md` (if it exists). Present relevant backlog items to the user grouped by priority (🔴 → 🟡 → 🟢), then ask:
    - What is this version's theme/goal?
-   - What features are planned? (rough list is fine)
+   - Which backlog items (if any) should be included in this version?
+   - Any new features not in the backlog? (rough list is fine)
    - Are there known bugs to fix in this version?
    - Prerequisites: which version must be completed first?
 
@@ -40,4 +41,6 @@ specs/v0.5/
 └── 003-fix-known-bug/
 ```
 
-6. After completion, prompt the next step: `/sdd-propose v0.5 001-feature-name` to start spec writing for the first feature.
+6. For any backlog items included in this version, remove them from BACKLOG.md.
+
+7. After completion, prompt the next step: `/sdd-propose v0.5 001-feature-name` to start spec writing for the first feature.

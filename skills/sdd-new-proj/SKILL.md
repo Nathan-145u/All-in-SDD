@@ -23,6 +23,8 @@ project-root/
 │   ├── DECISIONS.md
 │   ├── SCHEMA.md
 │   ├── DESIGN.md
+│   ├── BACKLOG.md
+│   ├── COUNTERS.md
 │   └── VERSION_PLAN.md
 └── specs/
 ```
@@ -42,6 +44,10 @@ See [docs/DECISIONS.md](docs/DECISIONS.md) for architecture decisions.
 **SCHEMA.md:** Empty template with table format instructions. If the user already knows the data model, assist with filling it in.
 
 **DESIGN.md:** Empty template with color/font/component format instructions.
+
+**BACKLOG.md:** Empty template with four categories (Ideas, Bug, Polish, Tech Debt).
+
+**COUNTERS.md:** Initialize with `T-number: 0`.
 
 **VERSION_PLAN.md:** Ask the user — architecture overview, tech stack table, goals for the first version.
 

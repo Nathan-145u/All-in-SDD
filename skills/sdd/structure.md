@@ -9,6 +9,8 @@ project-root/
 │   ├── CONSTITUTION.md                # Layer 1: Project constitution (global constraints + principles)
 │   ├── DECISIONS.md                   # Layer 1: Architecture Decision Records + deviation log
 │   ├── SCHEMA.md                      # Layer 1: Database schema (SSOT)
+│   ├── BACKLOG.md                     # Backlog: ideas, bugs, polish, tech debt
+│   ├── COUNTERS.md                    # Global counters (T-number)
 │   ├── DESIGN.md                      # Layer 1: Design language
 │   └── VERSION_PLAN.md                # Layer 4: Roadmap and version overview
 ├── specs/                             # Layers 2+3: Organized by version/feature
@@ -34,6 +36,7 @@ project-root/
 |-------|------|--------------|
 | Layer 1 Constitution | `CONSTITUTION.md` | Auto-loaded each session (via `CLAUDE.md` reference) |
 | Layer 1 Reference | `SCHEMA.md`, `DESIGN.md`, `DECISIONS.md` | On demand when data model / UI / architecture decisions are involved |
+| Layer 1 Reference | `BACKLOG.md`, `COUNTERS.md` | `BACKLOG.md`: when checking for existing ideas or adding new items. `COUNTERS.md`: when creating new tickets in tasks.md |
 | Layer 2 Feature Spec | `specs/v0.x/xxx/spec.md` | When implementing that feature |
 | Layer 2 Technical Plan | `specs/v0.x/xxx/plan.md` | When understanding the technical approach |
 | Layer 3 Execution Tasks | `specs/v0.x/xxx/tasks.md` | When executing specific work packages |

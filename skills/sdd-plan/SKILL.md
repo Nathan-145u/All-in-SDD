@@ -47,7 +47,7 @@ Based on an approved spec, generate a technical implementation plan and atomic w
 
 ### Generate tasks.md
 
-9. Scan all existing tasks.md files under `specs/` to find the maximum ticket number N.
+9. Read `docs/COUNTERS.md` to get the current T-number N.
 10. Break the plan into atomic work packages, numbering from T(N+1).
 11. For each ticket, determine if manual intervention is needed. Common `[HUMAN REQUIRED]` scenarios:
     - Environment variable / key configuration
@@ -76,4 +76,5 @@ Based on an approved spec, generate a technical implementation plan and atomic w
 
 13. Present the complete task list. If there are `[HUMAN REQUIRED]` tickets, **specifically highlight them to the user**.
 14. Request user confirmation.
-15. After completion, prompt the next step: `/sdd-do` to start execution.
+15. Update `docs/COUNTERS.md` with the new maximum T-number.
+16. After completion, prompt the next step: `/sdd-do` to start execution.

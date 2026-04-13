@@ -39,11 +39,15 @@ v0.5 — 0/2 features done
 Next executable ticket: T007 — iPad two-column layout NavigationSplitView
 ```
 
-4. Status markers:
+4. If `docs/BACKLOG.md` exists, append a backlog summary line showing total item count and priority breakdown. If the file does not exist, skip this line.
+
+Example: `Backlog: 10 items (2 🔴, 4 🟡, 4 🟢)`
+
+5. Status markers:
    - `[DONE]` ✅ — All tickets done
    - `[WIP]` 🔄 — Has ticket(s) in_progress or for_review
    - `[SPEC]` 📝 — Has spec but no tasks
    - `[EMPTY]` ⬜ — Empty directory
    - `[ABANDONED]` 🚫 — Abandoned
 
-5. If a version was specified, show a detailed view (each ticket listed with its status).
+6. If a version was specified, show a detailed view (each ticket listed with its status).
