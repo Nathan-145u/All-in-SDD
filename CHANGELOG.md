@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.3.0] - 2026-04-13
+
+### Added
+- **CLAUDE.md**: Codebase management rules — defines the version branch workflow for all future plugin changes
+- Enforces: version branch → discuss → implement → update docs → confirm → commit → merge to main
+
 ## [0.2.0] - 2026-04-13
 
 ### Added
