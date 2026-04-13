@@ -53,13 +53,23 @@ Issues:
      but ChatService.swift does not listen for episode switch events.
 ```
 
+### README Onboarding Check
+
+6. Check if the feature introduced setup-related changes (new env vars, dependencies, services, database, build steps). If so, verify that README.md:
+   - Lists all required environment variables with how to obtain them
+   - Documents any new prerequisites (runtimes, tools, SDKs)
+   - Includes step-by-step database setup instructions (if applicable)
+   - Explains how to get credentials for new third-party services
+   - Has accurate build/run commands
+   - If README.md is missing or incomplete → report as `[FAIL]` in the verification report
+
 ### Critical Path Check
 
-6. Read the "Critical Path" section of spec.md.
-7. If E2E test files exist, run the tests and report results.
-8. If no E2E tests exist, list critical path items as pending manual verification.
+7. Read the "Critical Path" section of spec.md.
+8. If E2E test files exist, run the tests and report results.
+9. If no E2E tests exist, list critical path items as pending manual verification.
 
 ### Completion
 
-9. All acceptance criteria pass → report feature verification complete, prompt the next step: `/sdd-close-feature <feature-path>` to sync and close.
-10. If items fail → list issues, suggest fixes or suggest running `/sdd-propose` to revise the spec.
+10. All acceptance criteria pass → report feature verification complete, prompt the next step: `/sdd-close-feature <feature-path>` to sync and close.
+11. If items fail → list issues, suggest fixes or suggest running `/sdd-propose` to revise the spec.

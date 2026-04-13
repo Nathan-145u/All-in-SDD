@@ -180,8 +180,29 @@ After feature completion, use `/sdd-close-feature` to perform these sync operati
 - Update spec (if revised during implementation).
 - Update `SCHEMA.md` (if data model changed).
 - Update `DECISIONS.md` (if new project-level architectural decisions were made).
+- Update `README.md` (if setup-related changes were introduced — see §2.6.1).
 - Update `VERSION_PLAN.md` with the feature's status.
 - Mark all tickets in tasks.md as `done`.
+
+### 2.6.1 README Maintenance Rule
+
+**`README.md` is the onboarding contract.** A new developer should be able to clone the repo and get a running environment by following README.md alone — no Slack messages, no tribal knowledge.
+
+Any ticket that introduces setup-related changes **must** update README.md in the same ticket. Setup-related changes include:
+
+| Change Type | README Section to Update |
+|-------------|-------------------------|
+| New environment variable or secret | "Environment setup" table — variable name, purpose, how to obtain, which file |
+| New database or migration | "Database Setup" — connection steps, seed data, migration commands |
+| New third-party service | "Third-Party Services" — what it is, how to get credentials, where to store them |
+| New runtime, SDK, or tool dependency | "Prerequisites" — tool name, minimum version, install command |
+| New build/run command | "Getting Started" — updated step-by-step instructions |
+| New simulator, emulator, or device requirement | "Prerequisites" — setup instructions and download links |
+
+**Sensitive credentials** should never be in README.md. Instead, document:
+- What the credential is for
+- Who to ask or where to find it (e.g., "ask team lead", "1Password vault: Project X", "Supabase Dashboard → Settings → API")
+- Which file to put it in (e.g., `.env.local`)
 
 ## 2.7 Abandonment
 

@@ -46,13 +46,23 @@ Execute a ticket and update its status.
    - If implementation reveals a situation the spec didn't anticipate → **pause**, revert ticket status to `planned`, report the issue to the user, suggest running `/sdd-propose` to revise the spec.
    - If spec-code drift is detected (implementation deviates from spec definition) → **immediately warn**, handle as an SDD violation.
 
-8. **Complete.** Change ticket status to `for_review`, present to the user:
+8. **README sync check.** After implementation, check if the ticket introduced any setup-related changes. If YES, update the project's `README.md` accordingly. Setup-related changes include:
+   - New environment variables or secrets → add to the "Environment setup" table with purpose, how to obtain, and which file
+   - New database or database migrations → update "Database Setup" section with connection steps
+   - New third-party service integrations → update "Third-Party Services" section with credential instructions
+   - New runtime/tool dependencies (e.g., a new SDK, simulator, CLI tool) → update "Prerequisites" section
+   - New build steps or run commands → update "Getting Started" section
+   - Changes to ports, URLs, or connection strings → update relevant sections
+
+   If README.md does not exist yet, create it following the template from `/sdd-new-proj`.
+
+9. **Complete.** Change ticket status to `for_review`, present to the user:
    - Change summary (which files were modified, key changes)
    - Whether the ticket's done definition is satisfied
    - Wait for user confirmation
 
-9. **After user confirms**, change status to `done`.
+10. **After user confirms**, change status to `done`.
 
-10. **Prompt next step:**
+11. **Prompt next step:**
     - If more tickets remain → prompt `/sdd-do` to continue
     - If all tickets for this feature are done → prompt `/sdd-verify-feature <feature-path>` for verification
