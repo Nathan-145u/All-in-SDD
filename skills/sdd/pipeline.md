@@ -163,7 +163,31 @@ Generate `tasks.md`: break the plan into atomic work packages.
 
 ## 2.4 Implementation
 
-- **Isolation:** Create a feature branch `feat/<version>/<feature-name>` (e.g., `feat/v0.4/001-ai-qa`).
+### Branch Strategy
+
+```
+main
+ └── release/v0.4                         ← version integration branch
+      ├── feat/v0.4/T005-add-chat         ← ticket branch → merge back to release/v0.4
+      ├── feat/v0.4/T006-db-migration     ← ticket branch → merge back to release/v0.4
+      └── feat/v0.4/T007-auth             ← ticket branch → merge back to release/v0.4
+                                              ↓
+                                    release/v0.4 → merge back to main
+```
+
+- **Version branch:** When a version starts, create `release/<version>` from `main` (e.g., `release/v0.4`). This branch is the integration point for all tickets in the version.
+- **Ticket branch:** For each ticket, create `feat/<version>/<ticket>-<short-name>` from the version branch (e.g., `feat/v0.4/T005-add-chat`).
+- **Merge flow:** After a ticket is done and confirmed, merge its ticket branch back into the version branch. Then create the next ticket branch from the updated version branch.
+- **Release flow:** After all tickets pass `/sdd-verify-version`, merge the version branch back into `main`.
+
+### Commit and Ticket Cadence
+
+- **One ticket at a time.** Complete the full cycle (implement → commit → confirm → merge) before starting the next ticket.
+- **One commit per ticket** (minimum). Commit message must include the ticket number: `feat(T005): add chat edge function`.
+- **Stop after each ticket.** Do not auto-continue to the next ticket. Present the result, wait for user confirmation, merge, then prompt `/sdd-do` for the next one.
+
+### Implementation Rules
+
 - Use TDD: write failing tests from acceptance criteria, then implement until tests pass.
 - Execute tickets sequentially as ordered in tasks.md.
 - If implementation reveals a situation the spec didn't anticipate → **pause, propose spec revision, wait for user confirmation before continuing**.

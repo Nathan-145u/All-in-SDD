@@ -53,7 +53,7 @@ Document Sync:
   [OK] VERSION_PLAN.md — Status updated
 
 Tickets: X/X done
-Branch: feat/<version>/<feature-name> — Ready to merge to main
+Branch: release/<version> — All ticket branches merged
 ```
 
 9. Prompt the next step:

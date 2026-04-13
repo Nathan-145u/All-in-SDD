@@ -71,6 +71,6 @@ Document Sync:
 
 ### Completion
 
-7. All checks pass → report version is ready for release.
+7. All checks pass → report version is ready for release. Prompt the user to merge `release/<version>` into `main`.
 
 8. If items fail → list all issues grouped by category (feature failures, test failures, cross-feature conflicts), suggest a fix order.

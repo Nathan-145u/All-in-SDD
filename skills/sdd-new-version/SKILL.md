@@ -43,4 +43,6 @@ specs/v0.5/
 
 6. For any backlog items included in this version, remove them from BACKLOG.md.
 
-7. After completion, prompt the next step: `/sdd-propose v0.5 001-feature-name` to start spec writing for the first feature.
+7. **Create version branch.** Create `release/<version>` from `main` (e.g., `release/v0.5`). This branch serves as the integration point for all tickets in this version.
+
+8. After completion, prompt the next step: `/sdd-propose v0.5 001-feature-name` to start spec writing for the first feature.

@@ -27,7 +27,7 @@ Execute a ticket and update its status.
 
 2. **Load context.** Read spec.md and plan.md from the ticket's feature directory.
 
-3. **Check isolation.** If not currently on the feature's branch, create or switch to `feat/<version>/<feature-name>` (e.g., `feat/v0.4/001-ai-qa`).
+3. **Check isolation.** Create or switch to the ticket branch `feat/<version>/<ticket>-<short-name>` (e.g., `feat/v0.4/T005-add-chat`) from the version branch `release/<version>`. If the version branch does not exist, create it from `main` first.
 
 4. **Check `[HUMAN REQUIRED]`.** If the ticket's "Manual Intervention" field contains `[HUMAN REQUIRED]`:
    - Change ticket status to `in_progress`
@@ -56,13 +56,20 @@ Execute a ticket and update its status.
 
    If README.md does not exist yet, create it following the template from `/sdd-new-proj`.
 
-9. **Complete.** Change ticket status to `for_review`, present to the user:
-   - Change summary (which files were modified, key changes)
-   - Whether the ticket's done definition is satisfied
-   - Wait for user confirmation
+9. **Commit.** Create a commit on the ticket branch. Commit message must include the ticket number:
+   ```
+   feat(T005): add chat edge function
+   ```
 
-10. **After user confirms**, change status to `done`.
+10. **Complete.** Change ticket status to `for_review`, present to the user:
+    - Change summary (which files were modified, key changes)
+    - Whether the ticket's done definition is satisfied
+    - **STOP here.** Wait for user confirmation. Do NOT auto-continue to the next ticket.
 
-11. **Prompt next step:**
+11. **After user confirms**, change status to `done`.
+
+12. **Merge.** Merge the ticket branch back into the version branch (`release/<version>`).
+
+13. **Prompt next step:**
     - If more tickets remain → prompt `/sdd-do` to continue
     - If all tickets for this feature are done → prompt `/sdd-verify-feature <feature-path>` for verification
