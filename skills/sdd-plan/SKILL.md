@@ -77,4 +77,5 @@ Based on an approved spec, generate a technical implementation plan and atomic w
 13. Present the complete task list. If there are `[HUMAN REQUIRED]` tickets, **specifically highlight them to the user**.
 14. Request user confirmation.
 15. Update `docs/COUNTERS.md` with the new maximum T-number.
-16. After completion, prompt the next step: `/sdd-do` to start execution.
+16. **Commit grooming artifacts.** Commit plan.md and tasks.md on the feature branch. Use `chore: grooming for <feature-name>` (or amend the previous grooming commit if research.md + spec.md were committed in the same session).
+17. After completion, prompt the next step: `/sdd-do` to start execution.

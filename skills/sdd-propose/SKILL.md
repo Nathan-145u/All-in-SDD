@@ -24,6 +24,10 @@ Check if `specs/<version>/<feature-name>/spec.md` exists:
 
 ## New Spec Mode
 
+### Phase 0: Branch Setup
+
+0. Ensure the feature branch exists. Create `feat/<version>/<feature-name>` from `release/<version>` (e.g., `feat/v0.1/001-episode-list`). If the version branch does not exist, create it from `main` first. Switch to the feature branch before proceeding.
+
 ### Phase 1: Research
 
 1. Read Layer 1 documents: `CONSTITUTION.md`, `SCHEMA.md`, `DESIGN.md`, `VERSION_PLAN.md`.
@@ -105,7 +109,9 @@ Check if `specs/<version>/<feature-name>/spec.md` exists:
 
 11. When all items pass, request user's final approval.
 
-12. After completion, prompt the next step: `/sdd-plan <version> <feature-name>` to enter the planning stage.
+12. **Commit grooming artifacts.** Commit research.md and spec.md on the feature branch. If this is the first grooming commit, use `chore: grooming for <feature-name>`. If previous grooming commits exist (e.g., from mid-progress saves), this commit updates them.
+
+13. After completion, prompt the next step: `/sdd-plan <version> <feature-name>` to enter the planning stage.
 
 ---
 

@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.5.0] - 2026-04-14
+
+### Changed
+- **Branch strategy**: Grooming artifacts (research/spec/plan/tasks) are now committed on a feature branch (`feat/<version>/<feature-name>`), not the version branch. Ticket branches are created from the feature branch and merge back to it. Feature branches merge back to the version branch on completion.
+- **Grooming commit rules**: Mandatory commit after all four grooming files are approved. Optional mid-progress commits allowed. Late modifications commit to the current branch.
+- **Code review gate**: Code review is now a mandatory step in the ticket lifecycle. Flow: implement → commit → AI code review → fix → user confirm → squash → merge. Previously review was an optional standalone step that was often skipped.
+- **`/sdd-propose`**: Now creates the feature branch at the start of grooming (Phase 0). Commits research.md + spec.md on completion.
+- **`/sdd-plan`**: Commits plan.md + tasks.md on the feature branch on completion.
+- **`/sdd-do`**: Ticket branches now branch from and merge back to the feature branch (not version branch). Added code review step (step 10) between commit and user confirmation. Squash-and-merge enforced at merge time.
+
 ## [0.4.0] - 2026-04-13
 
 ### Added

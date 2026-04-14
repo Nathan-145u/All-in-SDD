@@ -146,12 +146,12 @@ Generate `tasks.md`: break the plan into atomic work packages.
 
 **Status transitions:** `planned → in_progress → for_review → done`
 
-- `for_review` means: **Implementation is complete, waiting for the user to confirm the ticket's done definition is satisfied.** This is not code review (code review is in §2.5); it is user acceptance of a single ticket's deliverable.
+- `for_review` means: **Waiting for the user (human) to review and confirm the ticket's done definition is satisfied.** By this point, AI code review (§2.5) has already passed and any issues have been resolved. This is the human review gate.
 
 **AI execution rules:**
 - Start with the first ticket in `planned` status whose dependencies are all `done`
 - Change status to `in_progress` before starting
-- Change status to `for_review` after implementation, wait for user confirmation
+- After implementation: commit, run code review (§2.5), fix any issues, then change status to `for_review` and wait for user confirmation
 - Change status to `done` after user confirms
 - Execute one ticket at a time, then pick the next
 - If backtracking is needed (spec gap discovered), revert the current ticket to `planned` and fix the upstream file first
@@ -167,23 +167,36 @@ Generate `tasks.md`: break the plan into atomic work packages.
 
 ```
 main
- └── release/v0.4                         ← version integration branch
-      ├── feat/v0.4/T005-add-chat         ← ticket branch → merge back to release/v0.4
-      ├── feat/v0.4/T006-db-migration     ← ticket branch → merge back to release/v0.4
-      └── feat/v0.4/T007-auth             ← ticket branch → merge back to release/v0.4
-                                              ↓
-                                    release/v0.4 → merge back to main
+ └── release/v0.4                                ← version integration branch
+      └── feat/v0.4/001-episode-list             ← feature branch (grooming + integration)
+           ├── feat/v0.4/T005-add-chat           ← ticket branch → merge back to feature branch
+           ├── feat/v0.4/T006-db-migration       ← ticket branch → merge back to feature branch
+           └── feat/v0.4/T007-auth               ← ticket branch → merge back to feature branch
+                                                     ↓
+                                       feature branch → merge back to release/v0.4
+                                                                ↓
+                                                      release/v0.4 → merge back to main
 ```
 
-- **Version branch:** When a version starts, create `release/<version>` from `main` (e.g., `release/v0.4`). This branch is the integration point for all tickets in the version.
-- **Ticket branch:** For each ticket, create `feat/<version>/<ticket>-<short-name>` from the version branch (e.g., `feat/v0.4/T005-add-chat`).
-- **Merge flow:** After a ticket is done and confirmed, merge its ticket branch back into the version branch. Then create the next ticket branch from the updated version branch.
-- **Release flow:** After all tickets pass `/sdd-verify-version`, merge the version branch back into `main`.
+- **Version branch:** When a version starts, create `release/<version>` from `main` (e.g., `release/v0.4`). This branch is the integration point for all features in the version.
+- **Feature branch:** When grooming begins for a feature, create `feat/<version>/<feature-name>` from the version branch (e.g., `feat/v0.4/001-episode-list`). Grooming artifacts (research.md, spec.md, plan.md, tasks.md) are committed on this branch.
+- **Ticket branch:** For each ticket, create `feat/<version>/<ticket>-<short-name>` from the feature branch (e.g., `feat/v0.4/T005-add-chat`).
+- **Merge flow:** After a ticket is done and confirmed, merge its ticket branch back into the feature branch. Then create the next ticket branch from the updated feature branch.
+- **Feature close flow:** After all tickets in a feature pass `/sdd-verify-feature`, merge the feature branch back into the version branch.
+- **Release flow:** After all features pass `/sdd-verify-version`, merge the version branch back into `main`.
+
+### Grooming Commit Rules
+
+Grooming artifacts (research.md, spec.md, plan.md, tasks.md) must be committed on the feature branch:
+
+- **Mandatory commit:** After all four files are complete and approved, commit them together. Commit message: `chore: grooming for <feature-name>`.
+- **Optional mid-progress commits:** You may commit at any time to save progress (e.g., before closing a session). Commit message: `wip: grooming for <feature-name>`.
+- **Late modifications:** If grooming files are modified after implementation has started (e.g., spec revision during a ticket), commit to the current branch (ticket branch or feature branch).
 
 ### Commit and Ticket Cadence
 
-- **One ticket at a time.** Complete the full cycle (implement → commit → confirm → merge) before starting the next ticket.
-- **One commit per ticket** (minimum). Commit message must include the ticket number: `feat(T005): add chat edge function`.
+- **One ticket at a time.** Complete the full cycle (implement → commit → review → confirm → merge) before starting the next ticket.
+- **One commit per ticket** (target). Commit message must include the ticket number: `feat(T005): add chat edge function`. If code review produces fixes, commit them separately during development, then squash into one commit before merge.
 - **Stop after each ticket.** Do not auto-continue to the next ticket. Present the result, wait for user confirmation, merge, then prompt `/sdd-do` for the next one.
 
 ### Implementation Rules
@@ -192,11 +205,14 @@ main
 - Execute tickets sequentially as ordered in tasks.md.
 - If implementation reveals a situation the spec didn't anticipate → **pause, propose spec revision, wait for user confirmation before continuing**.
 
-## 2.5 Review
+## 2.5 AI Code Review
 
-- Review should be done in a new session (or using a dedicated review agent).
-- Load only: original spec + code diff.
+AI code review is a **mandatory gate** in the ticket lifecycle, not an optional step. It happens after commit and before the ticket enters `for_review` (human review).
+
+- Use a dedicated review agent (e.g., `code-reviewer`). If running in the same session, the agent must review against the spec, not from memory of implementation.
+- Load only: original spec + code diff (`git diff <feature-branch>...<ticket-branch>`).
 - Check strictly against acceptance criteria item by item.
+- If issues are found: fix, commit the fix separately. Squash into the original commit when ticket is confirmed done and ready to merge.
 
 ## 2.6 Sync and Close
 

@@ -27,7 +27,7 @@ Execute a ticket and update its status.
 
 2. **Load context.** Read spec.md and plan.md from the ticket's feature directory.
 
-3. **Check isolation.** Create or switch to the ticket branch `feat/<version>/<ticket>-<short-name>` (e.g., `feat/v0.4/T005-add-chat`) from the version branch `release/<version>`. If the version branch does not exist, create it from `main` first.
+3. **Check isolation.** Create or switch to the ticket branch `feat/<version>/<ticket>-<short-name>` (e.g., `feat/v0.4/T005-add-chat`) from the feature branch `feat/<version>/<feature-name>`. If the feature branch does not exist, create it from the version branch `release/<version>`. If the version branch does not exist, create it from `main`.
 
 4. **Check `[HUMAN REQUIRED]`.** If the ticket's "Manual Intervention" field contains `[HUMAN REQUIRED]`:
    - Change ticket status to `in_progress`
@@ -62,15 +62,22 @@ Execute a ticket and update its status.
    feat(T005): add chat edge function
    ```
 
-10. **Complete.** Change ticket status to `for_review`, present to the user:
+10. **AI code review.** Run a code review using a dedicated review agent (e.g., `code-reviewer`). The review must check:
+    - Code diff against the spec's acceptance criteria
+    - Code quality, security, and correctness
+    - If issues are found → fix them, commit the fixes separately on the ticket branch. Do NOT squash yet.
+    - If no issues → proceed.
+
+11. **Present to user.** Change ticket status to `for_review`, present:
     - Change summary (which files were modified, key changes)
+    - Code review results (passed, or issues found and fixed)
     - Whether the ticket's done definition is satisfied
     - **STOP here.** Wait for user confirmation. Do NOT auto-continue to the next ticket.
 
-11. **After user confirms**, change status to `done`.
+12. **After user confirms**, change status to `done`.
 
-12. **Merge.** Merge the ticket branch back into the version branch (`release/<version>`).
+13. **Squash and merge.** If there are multiple commits on the ticket branch (implementation + review fixes), squash them into one commit. Merge the ticket branch back into the feature branch (`feat/<version>/<feature-name>`).
 
-13. **Prompt next step:**
+14. **Prompt next step:**
     - If more tickets remain → prompt `/sdd-do` to continue
     - If all tickets for this feature are done → prompt `/sdd-verify-feature <feature-path>` for verification
