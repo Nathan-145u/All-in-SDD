@@ -4,6 +4,26 @@ All notable changes to this project will be documented in this file.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.8.0] - 2026-04-16
+
+### Added
+- **`planned` feature lifecycle state.** New features registered in `docs/VERSION_PLAN.md` now start as `planned`, not `in_progress`. The state flips to `in_progress` only when `skills/groom/SKILL.md` writes the first `research.md`. Rationale: if a feature is just a directory with no work done, calling it "in progress" is misleading — `/sdd:status` now correctly distinguishes "registered but not started" from "actually being worked on".
+- **New state transition:** `planned → in_progress → accepted → closed` (plus `abandoned` from any state).
+- **`[PLANNED]` marker** in `/sdd:status` output (📭).
+
+### Changed
+- `commands/new-version.md` now creates features with status `planned`.
+- `skills/groom/SKILL.md` now flips `planned → in_progress` when writing `research.md` (step 6). If the feature row is missing from VERSION_PLAN.md, groom creates it.
+- `ref/pipeline.md` §2.6 Feature Status table updated with the new `planned` row.
+- `/sdd:status` next-action table distinguishes `planned` features from legacy empty directories.
+- `skills/{accept-version, close-version}/SKILL.md` gate checks extended to also block when features are `planned` (previously only blocked `in_progress` and `accepted`).
+- `skills/accept-feature/SKILL.md` status update rule extended to handle `planned → accepted` (rare edge case, included for consistency).
+
+### Fixed
+- **`/sdd:backlog promote` now registers the promoted feature in `docs/VERSION_PLAN.md`.** Previously it only created the empty feature directory — the Feature Status table was left unchanged, so `/sdd:status` could not see the new feature. Promote now adds a `planned` row and appends the feature name to the Roadmap row for that version.
+- **`/sdd:backlog promote` validates the target version before mutating any state.** Previously the empty feature directory was created before checking whether the version existed in Version Status, leaving a half-state on disk if the version was missing. The check now runs first.
+- **`/sdd:status` next-action for legacy empty directories now backfills the missing `planned` status row** before grooming, instead of silently leaving the inconsistency.
+
 ## [0.7.0] - 2026-04-16
 
 ### Changed

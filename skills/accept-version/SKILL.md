@@ -15,7 +15,7 @@ Perform completeness verification for all features under a version, including cr
 ## Pre-checks (Gate)
 
 1. Scan all feature directories under `specs/<version>/`.
-2. Check the Feature Status table in `docs/VERSION_PLAN.md`: all features for this version must have status `closed` or `abandoned`. If any are still `in_progress` or `accepted` → stop, tell the user: "Version cannot be verified — <N> feature(s) still need closing: <list>. Please close them first before running version verification."
+2. Check the Feature Status table in `docs/VERSION_PLAN.md`: all features for this version must have status `closed` or `abandoned`. If any are still `planned`, `in_progress`, or `accepted` → stop, tell the user: "Version cannot be verified — <N> feature(s) still need closing: <list>. Please close them first before running version verification."
 
 ## Steps
 

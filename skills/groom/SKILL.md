@@ -62,9 +62,11 @@ Check if `specs/<version>/<feature-name>/spec.md` exists:
 
 5. Present the research results to the user, confirm nothing is missing.
 
+6. **Flip feature status from `planned` to `in_progress`.** Read `docs/VERSION_PLAN.md`. If this feature's row in the Feature Status table is `planned`, update it to `in_progress` (the feature has now actually started). If the status is already `in_progress` or anything else, leave it unchanged. If the row is missing entirely (e.g., the feature was created outside `/sdd:new-version`), add a new row with status `in_progress`.
+
 ### Phase 2: Write the Spec
 
-6. Generate `specs/<version>/<feature-name>/spec.md` template, pre-filling known information from research. Use `[NEED CLARIFICATION]` for content that cannot be determined independently:
+7. Generate `specs/<version>/<feature-name>/spec.md` template, pre-filling known information from research. Use `[NEED CLARIFICATION]` for content that cannot be determined independently:
 
 ```markdown
 # Spec — [Feature Name]
@@ -96,21 +98,21 @@ Check if `specs/<version>/<feature-name>/spec.md` exists:
 1. ...
 ```
 
-7. Ask the user structured questions about `[NEED CLARIFICATION]` items and other blanks. Prioritize: scope boundaries, error scenarios, acceptance criteria.
+8. Ask the user structured questions about `[NEED CLARIFICATION]` items and other blanks. Prioritize: scope boundaries, error scenarios, acceptance criteria.
 
-8. After user input, perform **adversarial review**: analyze missing edge cases and security risks, add findings as constraints.
+9. After user input, perform **adversarial review**: analyze missing edge cases and security risks, add findings as constraints.
 
 ### Phase 3: Completeness Check
 
-9. Verify against the `ref/standards.md` §3.2 completeness checklist item by item.
+10. Verify against the `ref/standards.md` §3.2 completeness checklist item by item.
 
-10. If any items fail (including remaining `[NEED CLARIFICATION]` tags), point them out to the user and assist with completion.
+11. If any items fail (including remaining `[NEED CLARIFICATION]` tags), point them out to the user and assist with completion.
 
-11. When all items pass, request user's final approval.
+12. When all items pass, request user's final approval.
 
-12. **Commit grooming artifacts.** Commit research.md and spec.md on the feature branch. If this is the first grooming commit, use `chore: grooming for <feature-name>`. If previous grooming commits exist (e.g., from mid-progress saves), this commit updates them.
+13. **Commit grooming artifacts.** Commit research.md and spec.md on the feature branch. If this is the first grooming commit, use `chore: grooming for <feature-name>`. If previous grooming commits exist (e.g., from mid-progress saves), this commit updates them.
 
-13. After completion, tell the user: "Research and spec are complete. Next step is to generate the technical plan and break it into atomic work packages (tickets). Continue?"
+14. After completion, tell the user: "Research and spec are complete. Next step is to generate the technical plan and break it into atomic work packages (tickets). Continue?"
 
 ---
 

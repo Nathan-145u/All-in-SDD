@@ -44,18 +44,18 @@ Create a new version directory and register it in VERSION_PLAN.md.
    | v0.5 | in_progress |
    ```
 
-   **Feature Status:** Add a row per feature with status `in_progress`.
+   **Feature Status:** Add a row per feature with status `planned`. Features are `planned` when the directory exists but no work has started (no research/spec/plan/tasks yet). The first time `skills/groom/SKILL.md` writes `research.md`, it flips the status to `in_progress`.
    ```markdown
    ## Feature Status
 
    | Feature | Status |
    |---------|--------|
-   | v0.5/001-feature-name | in_progress |
-   | v0.5/002-feature-name | in_progress |
-   | v0.5/003-fix-known-bug | in_progress |
+   | v0.5/001-feature-name | planned |
+   | v0.5/002-feature-name | planned |
+   | v0.5/003-fix-known-bug | planned |
    ```
 
-   Status values: `in_progress` → `accepted` → `closed` (set by accept-*/close-* skills) or `abandoned` (set by abandon).
+   Status values: `planned` → `in_progress` → `accepted` → `closed` (set by groom / accept-* / close-* skills) or `abandoned` (set by abandon).
 
 5. Pre-create directories for each feature the user listed (empty directories):
 

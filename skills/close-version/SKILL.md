@@ -14,7 +14,7 @@ After all features in a version are verified and closed, perform final checks, m
 
 ## Pre-checks
 
-1. Verify all features under `specs/<version>/` have status `closed` or `abandoned` in the Feature Status table of `docs/VERSION_PLAN.md`. If any remain `in_progress` or `accepted` → stop, tell the user: "Version cannot be closed — <N> feature(s) still open: <list>. Please close them first."
+1. Verify all features under `specs/<version>/` have status `closed` or `abandoned` in the Feature Status table of `docs/VERSION_PLAN.md`. If any remain `planned`, `in_progress`, or `accepted` → stop, tell the user: "Version cannot be closed — <N> feature(s) still open: <list>. Please close them first."
 2. Verify this version's row in the Version Status table of `docs/VERSION_PLAN.md` is `accepted`. If not → stop, tell the user: "Version has not been verified yet. Next step is to run version verification first. Continue?"
 
 ## Steps

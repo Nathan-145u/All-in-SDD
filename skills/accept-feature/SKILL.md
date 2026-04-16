@@ -72,6 +72,7 @@ Issues:
 
 11. **All acceptance criteria pass:**
     - **Status update rule** (write to `docs/VERSION_PLAN.md` → Feature Status table):
+      - `planned` → `accepted` (rare — only if verification passed without any tickets; included for consistency)
       - `in_progress` → `accepted`
       - `accepted` → no change (already verified)
       - `closed` → no change (re-verification during `accept-version`; do not regress closed features)
