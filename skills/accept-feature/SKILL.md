@@ -1,11 +1,10 @@
 ---
-name: sdd-verify-feature
+name: accept-feature
 description: Check feature completeness, verify against acceptance criteria
-user_invocable: true
-arg_description: "<feature-path> — e.g., specs/v0.4/001-ai-qa"
+user_invocable: false
 ---
 
-# /sdd-verify-feature
+# /sdd:accept-feature
 
 Perform completeness verification for a feature, checking whether implementation meets the spec's acceptance criteria.
 
@@ -17,19 +16,19 @@ Perform completeness verification for a feature, checking whether implementation
 
 ### Document Completeness Check
 
-1. Verify spec.md exists (required). Check if plan.md and tasks.md exist (optional for tailored features — see pipeline.md §2.8).
+1. Verify spec.md exists (required). Check if plan.md and tasks.md exist (optional for tailored features — see `ref/pipeline.md` §2.8).
 2. If tasks.md exists, verify all tickets have `done` status. If any non-done tickets → report and stop.
 3. If tasks.md does not exist (tailored feature), skip ticket verification and proceed directly to acceptance criteria check.
 
 ### Spec Acceptance Criteria Check
 
-3. Read the "Acceptance Criteria" section of spec.md.
-4. Verify each checklist item:
+4. Read the "Acceptance Criteria" section of spec.md.
+5. Verify each checklist item:
    - Read relevant code files to confirm implementation matches.
    - If automatically verifiable (e.g., file exists, function signature matches) → auto-mark.
    - If requiring human judgment (e.g., UI behavior) → list as pending user confirmation.
 
-5. Output the verification report:
+6. Output the verification report:
 
 ```
 Verification Report — 001-ai-qa
@@ -55,7 +54,7 @@ Issues:
 
 ### README Onboarding Check
 
-6. Check if the feature introduced setup-related changes (new env vars, dependencies, services, database, build steps). If so, verify that README.md:
+7. Check if the feature introduced setup-related changes (new env vars, dependencies, services, database, build steps). If so, verify that README.md:
    - Lists all required environment variables with how to obtain them
    - Documents any new prerequisites (runtimes, tools, SDKs)
    - Includes step-by-step database setup instructions (if applicable)
@@ -65,11 +64,23 @@ Issues:
 
 ### Critical Path Check
 
-7. Read the "Critical Path" section of spec.md.
-8. If E2E test files exist, run the tests and report results.
-9. If no E2E tests exist, list critical path items as pending manual verification.
+8. Read the "Critical Path" section of spec.md.
+9. If E2E test files exist, run the tests and report results.
+10. If no E2E tests exist, list critical path items as pending manual verification.
 
 ### Completion
 
-10. All acceptance criteria pass → report feature verification complete, prompt the next step: `/sdd-close-feature <feature-path>` to sync and close.
-11. If items fail → list issues, suggest fixes or suggest running `/sdd-propose` to revise the spec.
+11. **All acceptance criteria pass:**
+    - **Status update rule** (write to `docs/VERSION_PLAN.md` → Feature Status table):
+      - `in_progress` → `accepted`
+      - `accepted` → no change (already verified)
+      - `closed` → no change (re-verification during `accept-version`; do not regress closed features)
+    - Report verification complete.
+    - Tell the user:
+      - If status was just changed to `accepted`: "Feature verification passed. Next step is to sync documents and formally close this feature. Continue?"
+      - If status was already `accepted` or `closed` (re-verification case): "Feature re-verified, status unchanged."
+
+12. **If items fail:**
+    - Do NOT update VERSION_PLAN.md (status stays whatever it was).
+    - List all issues.
+    - Tell the user: "Verification failed with <N> issues. Next step options: fix the issues, or revise the spec if the spec itself is wrong. What would you like to do?"

@@ -66,8 +66,8 @@ git push origin main
 All-in-SDD/
 ├── .claude-plugin/        # Plugin and marketplace config (version lives here)
 ├── skills/                # All SDD skill definitions
-│   ├── sdd/               # Core reference (pipeline, standards, structure, review)
-│   └── sdd-*/             # Individual skill commands
+│   ├── ref/               # Core reference (pipeline, standards, structure, review)
+│   └── */                 # Individual skill commands (status, groom, exec, plan, etc.)
 ├── CLAUDE.md              # This file — codebase management rules
 ├── CHANGELOG.md           # Version history
 └── README.md              # Installation and usage guide

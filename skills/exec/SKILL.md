@@ -1,11 +1,10 @@
 ---
-name: sdd-do
+name: exec
 description: Execute the next (or a specified) ticket
-user_invocable: true
-arg_description: "[feature-path | ticket-number] — e.g., specs/v0.4/001-ai-qa or T005. Omit to auto-select the next executable ticket"
+user_invocable: false
 ---
 
-# /sdd-do
+# /sdd:exec
 
 Execute a ticket and update its status.
 
@@ -44,7 +43,7 @@ Execute a ticket and update its status.
    - Primarily modify files declared in the ticket. If changes to undeclared files are needed → pause, report to the user, request confirmation, then update the ticket's file list.
 
 7. **Exception handling.**
-   - If implementation reveals a situation the spec didn't anticipate → **pause**, revert ticket status to `planned`, report the issue to the user, suggest running `/sdd-propose` to revise the spec.
+   - If implementation reveals a situation the spec didn't anticipate → **pause**, revert ticket status to `planned`, report the issue to the user, and ask: "The spec doesn't cover this case. Next step is to revise the spec before continuing. Continue?"
    - If spec-code drift is detected (implementation deviates from spec definition) → **immediately warn**, handle as an SDD violation.
 
 8. **README sync check.** After implementation, check if the ticket introduced any setup-related changes. If YES, update the project's `README.md` accordingly. Setup-related changes include:
@@ -55,7 +54,7 @@ Execute a ticket and update its status.
    - New build steps or run commands → update "Getting Started" section
    - Changes to ports, URLs, or connection strings → update relevant sections
 
-   If README.md does not exist yet, create it following the template from `/sdd-new-proj`.
+   If README.md does not exist yet, create it following the template from `/sdd:init`.
 
 9. **Commit.** Create a commit on the ticket branch. Commit message must include the ticket number:
    ```
@@ -78,6 +77,6 @@ Execute a ticket and update its status.
 
 13. **Squash and merge.** If there are multiple commits on the ticket branch (implementation + review fixes), squash them into one commit. Merge the ticket branch back into the feature branch (`feat/<version>/<feature-name>`).
 
-14. **Prompt next step:**
-    - If more tickets remain → prompt `/sdd-do` to continue
-    - If all tickets for this feature are done → prompt `/sdd-verify-feature <feature-path>` for verification
+14. **Tell the user what's next:**
+    - If more tickets remain in this feature → "Ticket <T-number> done. Next step is to execute the next ticket (<next T-number>: <name>). Continue?"
+    - If all tickets for this feature are done → "All tickets for <feature-name> are done. Next step is to verify the feature against its acceptance criteria. Continue?"

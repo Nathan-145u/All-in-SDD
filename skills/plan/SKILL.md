@@ -1,11 +1,10 @@
 ---
-name: sdd-plan
+name: plan
 description: Generate technical plan (plan.md) and work packages (tasks.md) from a spec
-user_invocable: true
-arg_description: "<feature-path> — e.g., specs/v0.4/001-ai-qa"
+user_invocable: false
 ---
 
-# /sdd-plan
+# /sdd:plan
 
 Based on an approved spec, generate a technical implementation plan and atomic work packages.
 
@@ -16,8 +15,8 @@ Based on an approved spec, generate a technical implementation plan and atomic w
 ## Pre-checks (Gate)
 
 1. Verify `spec.md` exists.
-2. Validate the spec against `sdd/standards.md` §3.2 completeness checklist.
-3. If any items fail (including remaining `[NEED CLARIFICATION]` tags) → **stop**, prompt the user to run `/sdd-propose` to complete the spec first.
+2. Validate the spec against `ref/standards.md` §3.2 completeness checklist.
+3. If any items fail (including remaining `[NEED CLARIFICATION]` tags) → **stop**, tell the user: "Spec is incomplete (<N> issues: <list>). Planning is blocked until the spec passes the completeness checklist. Next step is to revise the spec — want to start that now?"
 4. If the spec declares prerequisite feature dependencies, verify all tickets in the depended-upon feature are `done`. Not complete → **stop**, report the blocking reason.
 
 ## Steps
@@ -77,5 +76,5 @@ Based on an approved spec, generate a technical implementation plan and atomic w
 13. Present the complete task list. If there are `[HUMAN REQUIRED]` tickets, **specifically highlight them to the user**.
 14. Request user confirmation.
 15. Update `docs/COUNTERS.md` with the new maximum T-number.
-16. **Commit grooming artifacts.** Commit plan.md and tasks.md on the feature branch. Use `chore: grooming for <feature-name>` (or amend the previous grooming commit if research.md + spec.md were committed in the same session).
-17. After completion, prompt the next step: `/sdd-do` to start execution.
+16. **Commit grooming artifacts.** Commit plan.md and tasks.md on the feature branch with message `chore: grooming for <feature-name>`. Always create a new commit — do not amend the previous grooming commit (amending can break history if it has already been pushed).
+17. After completion, tell the user: "Plan and tasks are ready. Next step is to execute the first ticket (TDD: write tests, implement, review). Continue?"

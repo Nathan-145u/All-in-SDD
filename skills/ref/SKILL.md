@@ -1,7 +1,7 @@
 ---
-name: sdd
-description: Spec-Driven Development workflow reference manual
-trigger: glob: "specs/**,docs/CONSTITUTION.md,docs/DECISIONS.md,docs/SCHEMA.md"
+name: ref
+description: SDD workflow reference manual — core principles, pipeline stages, spec standards, and review checklists
+user_invocable: false
 ---
 
 # SDD Reference Manual

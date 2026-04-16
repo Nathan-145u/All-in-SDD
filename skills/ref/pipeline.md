@@ -181,9 +181,9 @@ main
 - **Version branch:** When a version starts, create `release/<version>` from `main` (e.g., `release/v0.4`). This branch is the integration point for all features in the version.
 - **Feature branch:** When grooming begins for a feature, create `feat/<version>/<feature-name>` from the version branch (e.g., `feat/v0.4/001-episode-list`). Grooming artifacts (research.md, spec.md, plan.md, tasks.md) are committed on this branch.
 - **Ticket branch:** For each ticket, create `feat/<version>/<ticket>-<short-name>` from the feature branch (e.g., `feat/v0.4/T005-add-chat`).
-- **Merge flow:** After a ticket is done and confirmed, merge its ticket branch back into the feature branch. Then create the next ticket branch from the updated feature branch.
-- **Feature close flow:** After all tickets in a feature pass `/sdd-verify-feature`, merge the feature branch back into the version branch.
-- **Release flow:** After all features pass `/sdd-verify-version`, merge the version branch back into `main`.
+- **Ticket merge flow:** After a ticket is done and confirmed, squash-merge its ticket branch back into the feature branch. Then create the next ticket branch from the updated feature branch.
+- **Feature close flow:** After `/sdd:accept-feature` passes, `/sdd:close-feature` performs document sync and merges the feature branch back into the version branch (merge commit, not squash, to preserve ticket history).
+- **Release flow:** After `/sdd:accept-version` passes, `/sdd:close-version` merges the version branch back into `main` (merge commit, to preserve feature history).
 
 ### Grooming Commit Rules
 
@@ -197,7 +197,7 @@ Grooming artifacts (research.md, spec.md, plan.md, tasks.md) must be committed o
 
 - **One ticket at a time.** Complete the full cycle (implement → commit → review → confirm → merge) before starting the next ticket.
 - **One commit per ticket** (target). Commit message must include the ticket number: `feat(T005): add chat edge function`. If code review produces fixes, commit them separately during development, then squash into one commit before merge.
-- **Stop after each ticket.** Do not auto-continue to the next ticket. Present the result, wait for user confirmation, merge, then prompt `/sdd-do` for the next one.
+- **Stop after each ticket.** Do not auto-continue to the next ticket. Present the result, wait for user confirmation, merge, then tell the user the next ticket number and ask whether to continue.
 
 ### Implementation Rules
 
@@ -216,13 +216,55 @@ AI code review is a **mandatory gate** in the ticket lifecycle, not an optional 
 
 ## 2.6 Sync and Close
 
-After feature completion, use `/sdd-close-feature` to perform these sync operations:
+### Feature and Version Lifecycle States
+
+Features and versions have persistent states tracked in `docs/VERSION_PLAN.md`. The file has two status tables that skills read and write:
+
+```markdown
+## Feature Status
+
+| Feature | Status |
+|---------|--------|
+| v0.4/001-ai-qa | closed |
+| v0.5/001-subtitle-export | in_progress |
+
+## Version Status
+
+| Version | Status |
+|---------|--------|
+| v0.4 | closed |
+| v0.5 | in_progress |
+```
+
+| Feature Status | Meaning | Set By |
+|----------------|---------|--------|
+| `in_progress` (default) | Grooming or implementation underway | new-version (initial) |
+| `accepted` | `/sdd:accept-feature` passed | accept-feature |
+| `closed` | Document sync done, feature branch merged to version branch | close-feature |
+| `abandoned` | No longer being pursued | abandon |
+
+| Version Status | Meaning | Set By |
+|----------------|---------|--------|
+| `in_progress` (default) | Features still being delivered | new-version (initial) |
+| `accepted` | `/sdd:accept-version` passed, all features closed | accept-version |
+| `closed` | Version branch merged to main | close-version |
+
+These persistent states let `/sdd:status` distinguish verified-but-not-closed from not-yet-verified, avoiding re-triggering verification.
+
+### Sync Operations
+
+`/sdd:close-feature` performs:
 - Update spec (if revised during implementation).
 - Update `SCHEMA.md` (if data model changed).
 - Update `DECISIONS.md` (if new project-level architectural decisions were made).
 - Update `README.md` (if setup-related changes were introduced — see §2.6.1).
-- Update `VERSION_PLAN.md` with the feature's status.
-- Mark all tickets in tasks.md as `done`.
+- Update `VERSION_PLAN.md` — feature status: `accepted` → `closed`.
+- Merge the feature branch back into the version branch.
+
+`/sdd:close-version` performs:
+- Final cross-feature SCHEMA.md / DECISIONS.md / VERSION_PLAN.md consistency check.
+- Merge the version branch into `main`.
+- Update `VERSION_PLAN.md` — version status: `accepted` → `closed`.
 
 ### 2.6.1 README Maintenance Rule
 
@@ -246,7 +288,7 @@ Any ticket that introduces setup-related changes **must** update README.md in th
 
 ## 2.7 Abandonment
 
-When a feature is no longer being pursued, use `/sdd-abandon-feature`:
+When a feature is no longer being pursued, use `/sdd:abandon`:
 - Mark all incomplete tickets as `abandoned`
 - Mark the feature as abandoned in VERSION_PLAN.md
 - Preserve existing files as historical record — do not delete
@@ -288,5 +330,5 @@ Every item must have a priority tag:
 ### Relationship to Pipeline
 
 - Backlog items are NOT subject to the "spec before code" rule.
-- An item enters the formal pipeline only when promoted (via `/sdd-backlog promote`).
-- Promotion triggers `/sdd-propose` to create the feature spec.
+- An item enters the formal pipeline only when promoted (via `/sdd:backlog promote`).
+- Promotion triggers `/sdd:groom` to create the feature spec.

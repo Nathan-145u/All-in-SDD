@@ -4,6 +4,43 @@ All notable changes to this project will be documented in this file.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.6.0] - 2026-04-16
+
+### Added
+- **`/sdd:close-version` skill**: Separates version close (merge `release/<version>` → `main` + document sync) from version verification. Previously `sdd-verify-version` tried to do both.
+- **Feature/version lifecycle states** in `docs/VERSION_PLAN.md`: `in_progress` → `accepted` → `closed`. New-version creates `## Feature Status` and `## Version Status` tables; `accept-feature` / `accept-version` write the `accepted` marker; `close-feature` / `close-version` write `closed`; `abandon` writes `abandoned`. This lets `status` distinguish verified-but-not-closed from not-yet-verified (prevents status loop from re-triggering verification).
+- **Feature branch merge step** in `close-feature`: explicitly merges `feat/<version>/<feature-name>` into `release/<version>` (merge commit, preserving ticket history). Previously this merge was described in pipeline.md but never implemented.
+
+### Changed
+- **Status-driven workflow**: `/sdd:status` is now the primary entry point. It shows progress, determines the next action, and auto-continues when the user confirms. No need to remember individual command names.
+- **Internal skills**: `sdd:ref`, `sdd:groom`, `sdd:plan`, `sdd:exec`, `sdd:accept-feature`, `sdd:close-feature`, `sdd:accept-version`, and `sdd:close-version` are now internal modules (`user_invocable: false`). They are auto-triggered by `/sdd:status` based on project state.
+- **User-facing skills reduced to 5**: `/sdd:status`, `/sdd:init`, `/sdd:new-version`, `/sdd:backlog`, `/sdd:abandon`.
+- **Natural-language next-step prompts**: Internal skills now tell users what the next step is (e.g., "Next step is to generate the plan. Continue?") instead of exposing internal command names. Flow control is centralized in `/sdd:status`.
+- **New status markers**: Added `[ACCEPTED]`, `[DONE]`, `[PLAN]`, `[RESEARCH]`, `[CLOSED]` markers for finer-grained progress tracking.
+- **`backlog promote`** now offers to either start grooming the promoted feature immediately or continue promoting other backlog items in a batch.
+
+### Renamed
+- `/sdd-new-proj` → `/sdd:init`
+- `/sdd-propose` → `sdd:groom` (now internal)
+- `/sdd-do` → `sdd:exec` (now internal)
+- `/sdd-verify-feature` → `sdd:accept-feature` (now internal)
+- `/sdd-verify-version` → `sdd:accept-version` (now internal)
+- `/sdd-close-feature` → `sdd:close-feature` (now internal)
+- `/sdd-abandon-feature` → `/sdd:abandon`
+- `/sdd-plan` → `sdd:plan` (now internal)
+- `/sdd` → `sdd:ref` (now internal reference manual)
+- All remaining user commands moved to the `sdd:` namespace (`/sdd:status`, `/sdd:new-version`, `/sdd:backlog`).
+
+### Fixed
+- `accept-feature`: Fixed duplicate step-3 numbering. Status update is now conditional — only promotes `in_progress` → `accepted`, never regresses `closed` back to `accepted` during `accept-version` re-verification.
+- `accept-version`: Moved the "all features closed" gate check to the front of the workflow so it fails fast instead of running the full per-feature verification first. The gate now accepts both `closed` and `abandoned` features.
+- `status`: Scanning order explicitly documented (version ascending, then feature number ascending; abandoned features skipped). "Verify version" rule now triggers when all features are `closed` **or** `abandoned`.
+- `plan`: Grooming commit no longer offers an amend option — always creates a new commit to avoid rewriting pushed history.
+- `groom`: Revision Mode explicitly does not commit — revised grooming files travel with the user's ongoing work (usually absorbed into the next ticket commit).
+- Ref-file path references: all skills now use the `ref/` prefix consistently (was mixed `pipeline.md` / `ref/pipeline.md`).
+- `ref`: Added missing `user_invocable: false` marker — was documented as internal but not declared in frontmatter, so it still showed up as a user command.
+- `plan`: Reworded the spec-incomplete gate failure message. Previous wording ended with "Continue?" which ambiguously suggested continuing to plan with a broken spec; new wording makes clear that planning is blocked and the next action is to revise the spec.
+
 ## [0.5.0] - 2026-04-14
 
 ### Changed

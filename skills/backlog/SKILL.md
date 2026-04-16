@@ -1,16 +1,16 @@
 ---
-name: sdd-backlog
+name: backlog
 description: Add, view, promote, or drop items in docs/BACKLOG.md
 user_invocable: true
 arg_description: "[add <description>] | [promote <description>] | [drop <description>] — omit args to view"
 ---
 
-# /sdd-backlog
+# /sdd:backlog
 
 Manage the project backlog — a lightweight collection point for ideas,
 bugs, polish items, and tech debt that haven't entered the SDD spec pipeline.
 
-See sdd/pipeline.md §2.9 for category and priority definitions.
+See ref/pipeline.md §2.9 for category and priority definitions.
 
 ## Commands
 
@@ -23,7 +23,7 @@ Within each category, sort by priority: 🔴 high → 🟡 mid → 🟢 low.
 
 1. Read `docs/BACKLOG.md`.
 2. Discuss the item with the user to determine:
-   - **Category**: Ideas / Bug / Polish / Tech Debt (see pipeline.md §2.9 for definitions)
+   - **Category**: Ideas / Bug / Polish / Tech Debt (see `ref/pipeline.md` §2.9 for definitions)
    - **Priority**: 🔴 high / 🟡 mid / 🟢 low
 3. If both are obvious from context, confirm with the user and place directly.
    If ambiguous, ask one clarifying question.
@@ -34,9 +34,18 @@ Format: `- 🔴 high: description (2026-04-13)`
 ### promote <description>
 
 1. Find the item by description keyword match.
-2. Ask the user which version and feature name to use (e.g., v0.5 001-feature-name).
+2. Ask the user which version and feature name to use (e.g., `v0.5 001-feature-name`).
 3. Remove the item from BACKLOG.md.
-4. Trigger `/sdd-propose <version> <feature-name>` to begin the spec process.
+4. Create the empty feature directory `specs/<version>/<feature-name>/` (if not already present).
+5. Tell the user: "Backlog item promoted to feature `<version>/<feature-name>`. What's next?
+   - Start grooming this feature now (research + spec)
+   - Promote another backlog item
+   - Something else"
+
+   Based on the user's choice:
+   - **Start grooming** → Read and follow `groom/SKILL.md` with the new feature's version and name.
+   - **Promote another** → Return to the promote flow for the next item.
+   - **Something else** → Follow the user's request.
 
 ### drop <description>
 

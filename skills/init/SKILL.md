@@ -1,11 +1,11 @@
 ---
-name: sdd-new-proj
+name: init
 description: Scaffold a new Spec-Driven Development project
 user_invocable: true
 arg_description: "[project-name] — optional, defaults to current directory name"
 ---
 
-# /sdd-new-proj
+# /sdd:init
 
 Bootstrap a new SDD project structure.
 
@@ -93,6 +93,25 @@ Leave sections empty with `(Not yet configured)` if not yet known — they will 
 
 **COUNTERS.md:** Initialize with `T-number: 0`.
 
-**VERSION_PLAN.md:** Ask the user — architecture overview, tech stack table, goals for the first version.
+**VERSION_PLAN.md:** Start with an architecture overview and tech stack table from the user. Leave the three status-tracking sections (`## Roadmap`, `## Version Status`, `## Feature Status`) as empty tables — `/sdd:new-version` will populate them as versions and features are added. Example empty state:
 
-4. After completion, show the file tree and prompt the user for the next step: `/sdd-new-version <version>`.
+```markdown
+# Version Plan
+
+## Roadmap
+
+| Version | Theme | Features |
+|---------|-------|----------|
+
+## Version Status
+
+| Version | Status |
+|---------|--------|
+
+## Feature Status
+
+| Feature | Status |
+|---------|--------|
+```
+
+4. After completion, show the file tree and tell the user: "Project scaffolding is complete. Next step is to create your first version (e.g., `v0.1`) and plan its initial features. What version number should we start with?"

@@ -1,11 +1,10 @@
 ---
-name: sdd-verify-version
+name: accept-version
 description: Check version completeness, verify all features meet acceptance criteria, run integration tests
-user_invocable: true
-arg_description: "<version> — e.g., v0.4"
+user_invocable: false
 ---
 
-# /sdd-verify-version
+# /sdd:accept-version
 
 Perform completeness verification for all features under a version, including cross-feature integration testing.
 
@@ -13,15 +12,16 @@ Perform completeness verification for all features under a version, including cr
 
 - `version` (required): e.g., `v0.4`
 
+## Pre-checks (Gate)
+
+1. Scan all feature directories under `specs/<version>/`.
+2. Check the Feature Status table in `docs/VERSION_PLAN.md`: all features for this version must have status `closed` or `abandoned`. If any are still `in_progress` or `accepted` → stop, tell the user: "Version cannot be verified — <N> feature(s) still need closing: <list>. Please close them first before running version verification."
+
 ## Steps
 
 ### Per-Feature Verification
 
-1. Scan all feature directories under `specs/<version>/`.
-
-2. For each feature, execute the full `/sdd-verify-feature` check workflow.
-
-3. Check that all features have been closed via `/sdd-close-feature`. If any remain unclosed → stop, prompt the user to close them first.
+3. For each feature, execute the full `/sdd:accept-feature` check workflow as a double-check (features were already verified individually, but this catches any regressions introduced by later features).
 
 ### Cross-Feature Integration Test
 
@@ -71,6 +71,12 @@ Document Sync:
 
 ### Completion
 
-7. All checks pass → report version is ready for release. Prompt the user to merge `release/<version>` into `main`.
+7. **All checks pass:**
+   - Update `docs/VERSION_PLAN.md` → Version Status table: set this version's row to `accepted`. This persistent marker lets `status` distinguish verified versions from unverified ones.
+   - Report version verification complete.
+   - Tell the user: "Version verification passed. Next step is to merge `release/<version>` into `main` and formally close the version. Continue?"
 
-8. If items fail → list all issues grouped by category (feature failures, test failures, cross-feature conflicts), suggest a fix order.
+8. **If items fail:**
+   - Do NOT update VERSION_PLAN.md.
+   - List all issues grouped by category (feature failures, test failures, cross-feature conflicts).
+   - Tell the user: "Version verification failed. Suggested fix order: <list>. What would you like to do?"

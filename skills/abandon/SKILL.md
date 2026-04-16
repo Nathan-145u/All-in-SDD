@@ -1,11 +1,11 @@
 ---
-name: sdd-abandon-feature
+name: abandon
 description: Abandon a feature, mark all incomplete tickets as abandoned
 user_invocable: true
 arg_description: "<feature-path> — e.g., specs/v0.4/003-old-feature"
 ---
 
-# /sdd-abandon-feature
+# /sdd:abandon
 
 Abandon a feature. Preserve all files as historical record but mark as no longer in progress.
 
@@ -30,10 +30,10 @@ Abandon a feature. Preserve all files as historical record but mark as no longer
 
 4. After user confirms, execute:
    - Change all non-`done` tickets in tasks.md to `abandoned`
-   - Mark the feature as `[ABANDONED]` in VERSION_PLAN.md
+   - Set this feature's row in the Feature Status table of `docs/VERSION_PLAN.md` to `abandoned`
    - If a feature branch `feat/<version>/<feature-name>` exists, ask the user if they want to delete it
 
-5. Ask the user if they want to add the core idea back to `docs/BACKLOG.md`. If yes, follow the `/sdd-backlog add` workflow to determine category and priority.
+5. Ask the user if they want to add the core idea back to `docs/BACKLOG.md`. If yes, follow the `/sdd:backlog add` workflow to determine category and priority.
 
 6. Ask the user if they want to record the abandonment reason. If yes, create or append to `research.md` in the feature directory:
 
@@ -43,4 +43,4 @@ Abandon a feature. Preserve all files as historical record but mark as no longer
 - Reason: [user-provided reason]
 ```
 
-7. After completion, prompt `/sdd-status` to view the updated project status.
+7. After completion, tell the user: "Feature abandoned. Showing updated project status."

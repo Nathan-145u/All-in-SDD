@@ -1,11 +1,10 @@
 ---
-name: sdd-propose
+name: groom
 description: Create or revise a feature's research.md and spec.md
-user_invocable: true
-arg_description: "<version> <feature-name> — e.g., v0.4 001-ai-qa"
+user_invocable: false
 ---
 
-# /sdd-propose
+# /sdd:groom
 
 Create a new spec or revise an existing one. Automatically detects whether the feature already has files and routes to the appropriate mode.
 
@@ -103,7 +102,7 @@ Check if `specs/<version>/<feature-name>/spec.md` exists:
 
 ### Phase 3: Completeness Check
 
-9. Verify against the `sdd/standards.md` §3.2 completeness checklist item by item.
+9. Verify against the `ref/standards.md` §3.2 completeness checklist item by item.
 
 10. If any items fail (including remaining `[NEED CLARIFICATION]` tags), point them out to the user and assist with completion.
 
@@ -111,7 +110,7 @@ Check if `specs/<version>/<feature-name>/spec.md` exists:
 
 12. **Commit grooming artifacts.** Commit research.md and spec.md on the feature branch. If this is the first grooming commit, use `chore: grooming for <feature-name>`. If previous grooming commits exist (e.g., from mid-progress saves), this commit updates them.
 
-13. After completion, prompt the next step: `/sdd-plan <version> <feature-name>` to enter the planning stage.
+13. After completion, tell the user: "Research and spec are complete. Next step is to generate the technical plan and break it into atomic work packages (tickets). Continue?"
 
 ---
 
@@ -134,13 +133,15 @@ When spec.md already exists, enter revision mode.
    - Modify a specific section of the spec
    - Add missing error handling
    - Modify acceptance criteria
-   - **Run a full review** (check against `sdd/review.md` §4.2 review checklist item by item)
+   - **Run a full review** (check against `ref/review.md` §4.2 review checklist item by item)
    - Other
 
 4. Execute the modification or review.
 
 5. If the spec underwent substantial changes and plan.md/tasks.md already exist:
    - Warn the user: spec changes may require regenerating plan and tasks.
-   - Ask if they want to run `/sdd-plan` to re-plan.
+   - Ask if they want to regenerate the plan and tasks now.
 
 6. After modification, re-run the completeness checklist and present results (including whether `[NEED CLARIFICATION]` tags remain).
+
+7. Do not commit in revision mode. Revisions happen on whatever branch the user is on (usually a ticket branch during implementation, occasionally a feature branch between tickets). The revision is committed naturally as part of the user's ongoing work — e.g., a mid-ticket spec fix rides along with the ticket's commit, so the spec change and the code change that motivated it travel together.

@@ -1,11 +1,11 @@
 ---
-name: sdd-new-version
+name: new-version
 description: Create a new version directory and update the version plan
 user_invocable: true
 arg_description: "<version> — e.g., v0.5, v1.0, v2.3"
 ---
 
-# /sdd-new-version
+# /sdd:new-version
 
 Create a new version directory and register it in VERSION_PLAN.md.
 
@@ -26,11 +26,38 @@ Create a new version directory and register it in VERSION_PLAN.md.
    - Are there known bugs to fix in this version?
    - Prerequisites: which version must be completed first?
 
-4. Add a new row to the version table in `VERSION_PLAN.md`:
+4. **Update `docs/VERSION_PLAN.md`.** Ensure it has these three sections (create any that don't exist):
 
-```markdown
-| v0.5 | [theme] | [feature summary] | [feature summary] | [feature summary] |
-```
+   **Roadmap:** Add a new row summarizing this version.
+   ```markdown
+   ## Roadmap
+
+   | Version | Theme | Features |
+   |---------|-------|----------|
+   | v0.5 | [theme] | 001-feature-name, 002-feature-name, 003-fix-known-bug |
+   ```
+
+   **Version Status:** Add a row for this version with status `in_progress`.
+   ```markdown
+   ## Version Status
+
+   | Version | Status |
+   |---------|--------|
+   | v0.5 | in_progress |
+   ```
+
+   **Feature Status:** Add a row per feature with status `in_progress`.
+   ```markdown
+   ## Feature Status
+
+   | Feature | Status |
+   |---------|--------|
+   | v0.5/001-feature-name | in_progress |
+   | v0.5/002-feature-name | in_progress |
+   | v0.5/003-fix-known-bug | in_progress |
+   ```
+
+   Status values: `in_progress` → `accepted` → `closed` (set by accept-*/close-* skills) or `abandoned` (set by abandon).
 
 5. Pre-create directories for each feature the user listed (empty directories):
 
@@ -45,4 +72,4 @@ specs/v0.5/
 
 7. **Create version branch.** Create `release/<version>` from `main` (e.g., `release/v0.5`). This branch serves as the integration point for all tickets in this version.
 
-8. After completion, prompt the next step: `/sdd-propose v0.5 001-feature-name` to start spec writing for the first feature.
+8. After completion, tell the user: "Version `<version>` is set up with <N> feature(s) planned. Next step is to start grooming the first feature (`001-<name>`) — research the codebase and write its spec. Continue?"
