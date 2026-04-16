@@ -238,7 +238,8 @@ Features and versions have persistent states tracked in `docs/VERSION_PLAN.md`. 
 
 | Feature Status | Meaning | Set By |
 |----------------|---------|--------|
-| `in_progress` (default) | Grooming or implementation underway | new-version (initial) |
+| `planned` (default) | Registered but no work started — directory exists but empty | new-version, backlog promote |
+| `in_progress` | Grooming or implementation underway — at least research.md exists | groom (on first research.md write) |
 | `accepted` | `/sdd:accept-feature` passed | accept-feature |
 | `closed` | Document sync done, feature branch merged to version branch | close-feature |
 | `abandoned` | No longer being pursued | abandon |

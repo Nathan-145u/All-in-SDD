@@ -20,7 +20,7 @@ The primary entry point for the SDD workflow. Shows project progress and offers 
 2. For each version/feature, gather:
    - Which files exist in the feature directory (research / spec / plan / tasks)
    - Ticket status distribution in tasks.md
-   - Feature status from the Feature Status table in `docs/VERSION_PLAN.md` (`in_progress` / `accepted` / `closed` / `abandoned`)
+   - Feature status from the Feature Status table in `docs/VERSION_PLAN.md` (`planned` / `in_progress` / `accepted` / `closed` / `abandoned`)
    - Version status from the Version Status table in `docs/VERSION_PLAN.md` (`in_progress` / `accepted` / `closed`)
 
 3. Output format:
@@ -35,7 +35,7 @@ v0.4 [ACCEPTED] — 3/3 features closed, awaiting version close
 
 v0.5 — 0/2 features done
   [SPEC]      001-subtitle-export  spec only (no plan/tasks yet)  📝
-  [EMPTY]     002-fix-timeout      empty (no files yet)           ⬜
+  [PLANNED]   002-fix-timeout      registered, not started yet    📭
   [ABANDONED] 003-old-feature      abandoned                      🚫
 
 Next action: → Close version v0.4 (merge release/v0.4 → main)
@@ -53,7 +53,8 @@ Next action: → Close version v0.4 (merge release/v0.4 → main)
    - `[SPEC]` 📝 — Has spec but no plan/tasks
    - `[PLAN]` 📋 — Has spec + plan but no tasks yet
    - `[RESEARCH]` 🔍 — Has research.md but no spec yet
-   - `[EMPTY]` ⬜ — Empty directory
+   - `[PLANNED]` 📭 — Registered but not started (status is `planned`, directory is empty)
+   - `[EMPTY]` ⬜ — Empty directory but status is not `planned` (legacy / inconsistent)
    - `[ABANDONED]` 🚫 — Abandoned
 
 6. Version status markers:
@@ -69,7 +70,8 @@ Next action: → Close version v0.4 (merge release/v0.4 → main)
 
 | Feature/Version State | Next Action |
 |-----------------------|-------------|
-| Empty feature directory (no files) | Start grooming: create research.md + spec.md |
+| Feature status is `planned` (directory empty, no work started) | Start grooming: create research.md + spec.md (groom will flip status to `in_progress`) |
+| Empty feature directory but status is not `planned` (legacy / inconsistent) | Backfill the missing Feature Status row as `planned` in `docs/VERSION_PLAN.md`, then start grooming |
 | Has research.md but no spec.md | Continue grooming: finish spec.md |
 | Has spec.md with `[NEED CLARIFICATION]` tags | Resolve open questions in spec |
 | Has spec.md but no plan.md | Generate plan.md + tasks.md |

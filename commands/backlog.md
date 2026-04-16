@@ -33,9 +33,11 @@ Format: `- 🔴 high: description (2026-04-13)`
 
 1. Find the item by description keyword match.
 2. Ask the user which version and feature name to use (e.g., `v0.5 001-feature-name`).
-3. Remove the item from BACKLOG.md.
-4. Create the empty feature directory `specs/<version>/<feature-name>/` (if not already present).
-5. Tell the user: "Backlog item promoted to feature `<version>/<feature-name>`. What's next?
+3. **Validate the target version exists** in the Version Status table of `docs/VERSION_PLAN.md`. If it does not exist, stop and tell the user: "Version `<version>` is not registered. Please run `/sdd:new-version <version>` first." Do not modify any files until the version exists.
+4. Remove the item from BACKLOG.md.
+5. Create the empty feature directory `specs/<version>/<feature-name>/` (if not already present).
+6. **Register the feature in `docs/VERSION_PLAN.md`.** Add a new row to the Feature Status table with status `planned` (e.g., `| v0.5/001-feature-name | planned |`). If the Roadmap table has a row for this version, append `, <feature-name>` to that row's Features column (comma + space separator, matching the format in `commands/new-version.md`).
+7. Tell the user: "Backlog item promoted to feature `<version>/<feature-name>`. What's next?
    - Start grooming this feature now (research + spec)
    - Promote another backlog item
    - Something else"
