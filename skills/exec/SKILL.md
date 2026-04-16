@@ -1,7 +1,7 @@
 ---
 name: exec
 description: Execute the next (or a specified) ticket
-user_invocable: false
+user-invocable: false
 ---
 
 # /sdd:exec

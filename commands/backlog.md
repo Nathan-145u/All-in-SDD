@@ -1,8 +1,6 @@
 ---
-name: backlog
 description: Add, view, promote, or drop items in docs/BACKLOG.md
-user_invocable: true
-arg_description: "[add <description>] | [promote <description>] | [drop <description>] — omit args to view"
+argument-hint: '[add|promote|drop] [description]'
 ---
 
 # /sdd:backlog
@@ -10,7 +8,7 @@ arg_description: "[add <description>] | [promote <description>] | [drop <descrip
 Manage the project backlog — a lightweight collection point for ideas,
 bugs, polish items, and tech debt that haven't entered the SDD spec pipeline.
 
-See ref/pipeline.md §2.9 for category and priority definitions.
+See `ref/pipeline.md` §2.9 for category and priority definitions.
 
 ## Commands
 
@@ -43,7 +41,7 @@ Format: `- 🔴 high: description (2026-04-13)`
    - Something else"
 
    Based on the user's choice:
-   - **Start grooming** → Read and follow `groom/SKILL.md` with the new feature's version and name.
+   - **Start grooming** → Read and follow `skills/groom/SKILL.md` with the new feature's version and name.
    - **Promote another** → Return to the promote flow for the next item.
    - **Something else** → Follow the user's request.
 

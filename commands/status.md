@@ -1,8 +1,6 @@
 ---
-name: status
 description: Show current SDD project progress and drive the next step
-user_invocable: true
-arg_description: "[version] — optional, e.g., v0.4. Omit to show all versions"
+argument-hint: '[version]'
 ---
 
 # /sdd:status
@@ -95,13 +93,13 @@ Next action: → Close version v0.4 (merge release/v0.4 → main)
 
 | Next Action | Internal Skill to Load |
 |-------------|----------------------|
-| Start/continue grooming | Read and follow `groom/SKILL.md` |
-| Generate plan + tasks | Read and follow `plan/SKILL.md` |
-| Execute next ticket | Read and follow `exec/SKILL.md` |
-| Verify feature | Read and follow `accept-feature/SKILL.md` |
-| Close feature | Read and follow `close-feature/SKILL.md` |
-| Verify version | Read and follow `accept-version/SKILL.md` |
-| Close version | Read and follow `close-version/SKILL.md` |
+| Start/continue grooming | Read and follow `skills/groom/SKILL.md` |
+| Generate plan + tasks | Read and follow `skills/plan/SKILL.md` |
+| Execute next ticket | Read and follow `skills/exec/SKILL.md` |
+| Verify feature | Read and follow `skills/accept-feature/SKILL.md` |
+| Close feature | Read and follow `skills/close-feature/SKILL.md` |
+| Verify version | Read and follow `skills/accept-version/SKILL.md` |
+| Close version | Read and follow `skills/close-version/SKILL.md` |
 
 To load an internal skill: read its `SKILL.md` file and follow its instructions step by step, as if the user had invoked it directly.
 

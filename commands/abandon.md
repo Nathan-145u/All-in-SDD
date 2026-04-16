@@ -1,8 +1,6 @@
 ---
-name: abandon
 description: Abandon a feature, mark all incomplete tickets as abandoned
-user_invocable: true
-arg_description: "<feature-path> — e.g., specs/v0.4/003-old-feature"
+argument-hint: '<feature-path>'
 ---
 
 # /sdd:abandon

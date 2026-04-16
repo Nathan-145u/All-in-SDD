@@ -1,8 +1,6 @@
 ---
-name: new-version
 description: Create a new version directory and update the version plan
-user_invocable: true
-arg_description: "<version> — e.g., v0.5, v1.0, v2.3"
+argument-hint: '<version>'
 ---
 
 # /sdd:new-version

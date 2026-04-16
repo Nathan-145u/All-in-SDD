@@ -1,10 +1,8 @@
----
-name: ref
-description: SDD workflow reference manual — core principles, pipeline stages, spec standards, and review checklists
-user_invocable: false
----
-
 # SDD Reference Manual
+
+This directory is a reference library (not a Claude Code skill). The files here
+are loaded on demand by the 7 executable skills under `skills/` and by
+`commands/backlog.md`.
 
 ## Core Principles
 

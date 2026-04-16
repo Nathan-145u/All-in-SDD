@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.7.0] - 2026-04-16
+
+### Changed
+- **User-facing commands moved to `commands/` directory.** Previously all 13 skills lived under `skills/`, which caused two problems: (1) the palette showed bare names like `/status` instead of `/sdd:status` — Claude Code only renders the plugin namespace prefix for items under `commands/`, not `skills/`; (2) internal skills were still appearing in the palette because the frontmatter field to hide them was named incorrectly (see Fixed below). Moved the 5 user-facing entry points (`status`, `init`, `new-version`, `backlog`, `abandon`) from `skills/<name>/SKILL.md` to `commands/<name>.md`. The 7 internal executable skills (`groom`, `plan`, `exec`, `accept-feature`, `accept-version`, `close-feature`, `close-version`) remain in `skills/` and are loaded on demand by `commands/status.md`.
+- Command frontmatter format: commands use `description` + `argument-hint` (no `name` field — the filename is the name; no `user-invocable` field — commands are always user-invokable).
+- **`ref/` promoted to top-level reference library.** Previously `skills/ref/` held reference docs (pipeline, standards, structure, review) wrapped in a fake skill (only `SKILL.md` was an empty index, the real content was in sibling markdown files). Moved to root `ref/`, renamed `SKILL.md` → `README.md`, stripped skill frontmatter. Rationale: `ref/` has no executable logic, so presenting it as a skill was misleading; separating docs from executable skills clarifies the plugin's architecture (`commands/` = user entry, `skills/` = executable stages, `ref/` = documentation).
+
+### Fixed
+- **Internal skills were appearing in the `/` command palette.** All skills were using frontmatter field `user_invocable` (underscore) instead of the Claude Code plugin spec field `user-invocable` (hyphen). The field was silently ignored. After the commands/skills split above, this is no longer the primary gate — the palette only lists files under `commands/` — but the field was renamed in all remaining skill files for correctness.
+
 ## [0.6.0] - 2026-04-16
 
 ### Added

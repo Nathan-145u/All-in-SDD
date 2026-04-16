@@ -1,7 +1,7 @@
 ---
 name: accept-version
 description: Check version completeness, verify all features meet acceptance criteria, run integration tests
-user_invocable: false
+user-invocable: false
 ---
 
 # /sdd:accept-version
