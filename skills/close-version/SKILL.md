@@ -1,7 +1,7 @@
 ---
 name: close-version
 description: After version verification passes, merge to main and formally close the version
-user_invocable: false
+user-invocable: false
 ---
 
 # /sdd:close-version

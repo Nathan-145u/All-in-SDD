@@ -1,7 +1,7 @@
 ---
 name: accept-feature
 description: Check feature completeness, verify against acceptance criteria
-user_invocable: false
+user-invocable: false
 ---
 
 # /sdd:accept-feature

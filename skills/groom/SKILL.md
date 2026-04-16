@@ -1,7 +1,7 @@
 ---
 name: groom
 description: Create or revise a feature's research.md and spec.md
-user_invocable: false
+user-invocable: false
 ---
 
 # /sdd:groom

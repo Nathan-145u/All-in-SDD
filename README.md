@@ -28,7 +28,6 @@ SDD enforces a disciplined pipeline: **write spec → plan → break into tasks 
 
 | Skill | Description |
 |-------|-------------|
-| `sdd:ref` | Workflow reference manual — core principles, pipeline, and red lines |
 | `sdd:groom` | Create or revise a feature's research.md and spec.md |
 | `sdd:plan` | Generate technical plan (plan.md) and work packages (tasks.md) from a spec |
 | `sdd:exec` | Execute the next (or a specified) ticket |
@@ -126,20 +125,21 @@ All-in-SDD/
 ├── .claude-plugin/
 │   ├── marketplace.json
 │   └── plugin.json
-├── skills/
-│   ├── ref/                    # Core reference (pipeline, standards, structure, review)
-│   ├── init/
-│   ├── new-version/
+├── commands/                   # User-facing slash commands (shown as /sdd:<name>)
+│   ├── status.md
+│   ├── init.md
+│   ├── new-version.md
+│   ├── backlog.md
+│   └── abandon.md
+├── skills/                     # Internal executable skills (auto-loaded by status.md)
 │   ├── groom/
 │   ├── plan/
 │   ├── exec/
-│   ├── status/
-│   ├── backlog/
 │   ├── accept-feature/
 │   ├── close-feature/
 │   ├── accept-version/
-│   ├── close-version/
-│   └── abandon/
+│   └── close-version/
+├── ref/                        # Reference library (pipeline, standards, structure, review)
 └── README.md
 ```
 

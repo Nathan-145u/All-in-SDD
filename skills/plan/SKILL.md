@@ -1,7 +1,7 @@
 ---
 name: plan
 description: Generate technical plan (plan.md) and work packages (tasks.md) from a spec
-user_invocable: false
+user-invocable: false
 ---
 
 # /sdd:plan

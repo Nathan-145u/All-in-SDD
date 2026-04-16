@@ -1,7 +1,7 @@
 ---
 name: close-feature
 description: After feature verification passes, sync documents, merge the feature branch, and formally close the feature
-user_invocable: false
+user-invocable: false
 ---
 
 # /sdd:close-feature

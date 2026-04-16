@@ -1,8 +1,6 @@
 ---
-name: init
 description: Scaffold a new Spec-Driven Development project
-user_invocable: true
-arg_description: "[project-name] — optional, defaults to current directory name"
+argument-hint: '[project-name]'
 ---
 
 # /sdd:init
